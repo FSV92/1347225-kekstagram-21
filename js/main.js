@@ -9,6 +9,7 @@ const MESSAGES = [
   `Лица у людей на фотке перекошены, как будто их избивают.Как можно было поймать такой неудачный момент ?!`,
 ];
 const NAMES = [`Артем`, `Сергей`, `Павел`, `Екатерина`, `Игорь`, `Елена`];
+const BODY = document.querySelector(`body`);
 
 let picture = document
   .querySelector(`#picture`)
@@ -31,11 +32,12 @@ let renderPhoto = function (photo) {
 
   return photoElement;
 };
+
+let comments = [];
+let photos = [];
 let addPhotos = function (quantity) {
-  let photos = [];
   let photo = {};
   let comment = {};
-  let comments = [];
 
   for (let i = 1; i <= quantity; i++) {
     for (let j = 1; j <= 6; j++) {
@@ -63,3 +65,29 @@ let addPhotos = function (quantity) {
   pictures.appendChild(fragment);
 };
 addPhotos(25);
+
+let bigPicture = document.querySelector(`.big-picture`);
+let bigPictureImg = bigPicture
+  .querySelector(`.big-picture__img`)
+  .querySelector(`img`);
+let bigPictureLikes = bigPicture.querySelector(`.likes-count`);
+let bigPictureComments = bigPicture.querySelector(`.comments-count`);
+let socialCaption = bigPicture.querySelector(`.social__caption`);
+let socialComments = bigPicture.querySelectorAll(`.social__comment`);
+let socialCommentCount = bigPicture.querySelector(`.social__comment-count`);
+let commentsLoader = bigPicture.querySelector(`.comments-loader`);
+
+bigPicture.classList.remove(`hidden`);
+bigPictureImg.src = photos[0].url;
+bigPictureLikes.textContent = photos[0].likes;
+bigPictureComments.textContent = photos[0].comments;
+for (let i = 0; i < socialComments.length; i++) {
+  socialComments[i].querySelector(`img`).src = comments[i].avatar;
+  socialComments[i].querySelector(`img`).alt = comments[i].name;
+  socialComments[i].querySelector(`.social__text`).textContent =
+    comments[i].message;
+}
+socialCaption.textContent = photos[0].description;
+socialCommentCount.classList.add(`hidden`);
+commentsLoader.classList.add(`hidden`);
+BODY.classList.add(`modal-open`);
