@@ -9,7 +9,6 @@ const MESSAGES = [
   `Лица у людей на фотке перекошены, как будто их избивают.Как можно было поймать такой неудачный момент ?!`,
 ];
 const NAMES = [`Артем`, `Сергей`, `Павел`, `Екатерина`, `Игорь`, `Елена`];
-const BODY = document.querySelector(`body`);
 
 let picture = document
   .querySelector(`#picture`)
@@ -77,7 +76,7 @@ let socialComments = bigPicture.querySelectorAll(`.social__comment`);
 let socialCommentCount = bigPicture.querySelector(`.social__comment-count`);
 let commentsLoader = bigPicture.querySelector(`.comments-loader`);
 
-bigPicture.classList.remove(`hidden`);
+// bigPicture.classList.remove(`hidden`);
 bigPictureImg.src = photos[0].url;
 bigPictureLikes.textContent = photos[0].likes;
 bigPictureComments.textContent = photos[0].comments;
@@ -90,4 +89,3 @@ for (let i = 0; i < socialComments.length; i++) {
 socialCaption.textContent = photos[0].description;
 socialCommentCount.classList.add(`hidden`);
 commentsLoader.classList.add(`hidden`);
-BODY.classList.add(`modal-open`);
