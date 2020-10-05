@@ -149,7 +149,7 @@ let getCheckHashtags = function () {
     }
     if (hashtags.indexOf(hashtags[i], i + 1) > -1) {
       textHashtags.setCustomValidity(
-        `один и тот же хэш-тег не может быть использован дважды`
+          `один и тот же хэш-тег не может быть использован дважды`
       );
     }
   }
