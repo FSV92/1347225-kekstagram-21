@@ -53,6 +53,7 @@
               Загрузка фотографии
             </h2>
             <form
+              action="https://javascript.pages.academy/kekstagram"
               class="img-upload__form"
               id="upload-select-image"
               method="post"
@@ -90,9 +91,10 @@
                       <input
                         type="text"
                         class="scale__control scale__control--value"
-                        value="55%"
+                        value="100%"
                         title="Image Scale"
                         name="scale"
+                        scale="0.5"
                         readonly
                       />
                       <button
@@ -470,5 +472,6 @@
     </template>
 
     <script src="js/main.js"></script>
+    <script src="js/upload.js"></script>
   </body>
 </html>
