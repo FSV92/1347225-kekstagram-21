@@ -22,18 +22,16 @@
     }
   };
 
-  let openBigPhotoEnter = function (evt) {
-    if (evt.key === `Enter`) {
-      evt.preventDefault();
-      openBigPhoto();
-    }
-  };
-
   let openBigPhoto = function (evt) {
-    bigPicture.classList.remove(`hidden`);
-    bigPictureImg.src = evt.target.src;
-    document.querySelector(`body`).classList.add(`modal-open`);
-    document.addEventListener(`keydown`, closeBigPhotoEsc);
+    if (evt.target && evt.target.matches(`.picture__img`)) {
+      bigPictureImg.src = evt.target.src;
+      bigPicture.classList.remove(`hidden`);
+      document.querySelector(`body`).classList.add(`modal-open`);
+      document.addEventListener(`keydown`, closeBigPhotoEsc);
+
+      bigPictureLikes.textContent = evt.target.nextElementSibling.lastElementChild.textContent;
+      bigPictureComments.textContent = evt.target.nextElementSibling.firstElementChild.textContent;
+    }
   };
 
   let closeBigPhoto = function () {
@@ -42,8 +40,6 @@
     document.querySelector(`body`).classList.remove(`modal-open`);
   };
 
-  bigPictureLikes.textContent = window.gallery.photos[0].likes;
-  bigPictureComments.textContent = window.gallery.photos[0].comments;
   for (let i = 0; i < socialComments.length; i++) {
     socialComments[i].querySelector(`img`).src =
       window.gallery.comments[i].avatar;
@@ -52,6 +48,7 @@
     socialComments[i].querySelector(`.social__text`).textContent =
       window.gallery.comments[i].message;
   }
+
   socialCaption.textContent = window.gallery.photos[0].description;
   socialCommentCount.classList.add(`hidden`);
   commentsLoader.classList.add(`hidden`);
@@ -61,7 +58,15 @@
   });
 
   window.gallery.pictures.addEventListener(`keydown`, function (evt) {
-    openBigPhotoEnter(evt);
+    if (evt.key === `Enter`) {
+      bigPictureImg.src = evt.target.querySelector(`img`).src;
+      bigPicture.classList.remove(`hidden`);
+      document.querySelector(`body`).classList.add(`modal-open`);
+      document.addEventListener(`keydown`, closeBigPhotoEsc);
+
+      bigPictureLikes.textContent = evt.target.querySelector(`.picture__likes`).textContent;
+      bigPictureComments.textContent = evt.target.querySelector(`.picture__comments`).textContent;
+    }
   });
 
   bigPictureCancel.addEventListener(`click`, function () {

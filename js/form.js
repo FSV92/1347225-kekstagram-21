@@ -4,9 +4,10 @@
   let uploadFile = document.querySelector(`#upload-file`);
   let imgUploadOverlay = document.querySelector(`.img-upload__overlay`);
   let uploadCancel = imgUploadOverlay.querySelector(`#upload-cancel`);
+  let textDescription = imgUploadOverlay.querySelector(`.text__description`);
 
   let onEditorEscPress = function (evt) {
-    if (evt.key === `Escape` && window.hastags.textHashtags !== document.activeElement) {
+    if (evt.key === `Escape` && document.activeElement !== window.hastags.textHashtags & document.activeElement !== textDescription) {
       evt.preventDefault();
       closeEditor();
     }
