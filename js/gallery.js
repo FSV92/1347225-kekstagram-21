@@ -20,7 +20,7 @@
     photoElement.querySelector(`.picture__img`).src = photo.url;
     photoElement.querySelector(`.picture__likes`).textContent = photo.likes;
     photoElement.querySelector(`.picture__comments`).textContent =
-      photo.comments;
+      photo.numberComments;
 
     return photoElement;
   };
@@ -31,20 +31,19 @@
     let comment = {};
 
     for (let i = 1; i <= quantity; i++) {
-      for (let j = 1; j <= 6; j++) {
-        comment = {
-          avatar: `img/avatar-${getRandomInRange(1, 6)}.svg`,
-          message: getRandomFromArray(window.data.MESSAGES),
-          name: getRandomFromArray(window.data.NAMES),
-        };
-        comments.push(comment);
-      }
+      comment = {
+        avatar: `img/avatar-${getRandomInRange(1, 6)}.svg`,
+        message: getRandomFromArray(window.data.MESSAGES),
+        name: getRandomFromArray(window.data.NAMES),
+      };
+      comments.push(comment);
 
       photo = {
         url: `photos/${i}.jpg`,
         description: `Просто фото.`,
         likes: getRandomInRange(15, 200),
-        comments: getRandomInRange(1, 50),
+        numberComments: getRandomInRange(1, 50),
+        textComment: comments[i]
       };
       photos.push(photo);
     }
