@@ -25,6 +25,9 @@
       document.querySelector(`body`).classList.add(`modal-open`);
       uploadCancel.addEventListener(`click`, closeEditor);
       document.addEventListener(`keydown`, onEditorEscPress);
+      window.effects.applyEffect(`effects__preview--none`);
+      window.scale.imgUploadPreview.removeAttribute(`style`);
+      window.effects.effectLevel.style.display = `none`;
     });
   };
 
