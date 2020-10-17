@@ -40,6 +40,7 @@
   });
 
   window.scale = {
-    imgUploadPreview
+    imgUploadPreview,
+    scaleValue
   };
 }());

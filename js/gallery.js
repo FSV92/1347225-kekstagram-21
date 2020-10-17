@@ -24,6 +24,29 @@
 
     return photoElement;
   };
+
+  let succesHandler = function (sentPhotos) {
+
+    let fragment = document.createDocumentFragment();
+    for (let i = 0; i < sentPhotos.length; i++) {
+      fragment.appendChild(renderPhoto(sentPhotos[i]));
+    }
+    pictures.appendChild(fragment);
+  };
+
+  let errorHandler = function (errorMessage) {
+    let node = document.createElement(`div`);
+    node.style = `z-index: 100; margin: 0 auto; text-align: center; background-color: red;`;
+    node.style.position = `absolute`;
+    node.style.left = `20%`;
+    node.style.right = `20%`;
+    node.style.fontSize = `30px`;
+    node.style.lineHeight = `30px`;
+
+    node.textContent = errorMessage;
+    document.body.insertAdjacentElement(`afterbegin`, node);
+  };
+
   let comments = [];
   let photos = [];
   let addPhotos = function (quantity) {
@@ -48,28 +71,6 @@
       photos.push(photo);
     }
 
-    let succesHandler = function (sentPhotos) {
-
-      let fragment = document.createDocumentFragment();
-      for (let i = 0; i < sentPhotos.length; i++) {
-        fragment.appendChild(renderPhoto(sentPhotos[i]));
-      }
-      pictures.appendChild(fragment);
-    };
-
-    let errorHandler = function (errorMessage) {
-      let node = document.createElement(`div`);
-      node.style = `z-index: 100; margin: 0 auto; text-align: center; background-color: red;`;
-      node.style.position = `absolute`;
-      node.style.left = `20%`;
-      node.style.right = `20%`;
-      node.style.fontSize = `30px`;
-      node.style.lineHeight = `30px`;
-
-      node.textContent = errorMessage;
-      document.body.insertAdjacentElement(`afterbegin`, node);
-    };
-
     window.backend.getPictures(succesHandler, errorHandler);
   };
 
@@ -77,6 +78,7 @@
     comments,
     photos,
     pictures,
-    addPhotos
+    addPhotos,
+    errorHandler
   };
 })();

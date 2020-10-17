@@ -45,6 +45,7 @@
   effectsList.addEventListener(`change`, function (evt) {
     selectEffect(evt);
     window.scale.imgUploadPreview.removeAttribute(`style`);
+    window.scale.scaleValue.value = `100%`;
     defaultValue();
   });
 

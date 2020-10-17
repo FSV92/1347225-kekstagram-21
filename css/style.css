@@ -1263,6 +1263,17 @@ main {
   background-color: rgba(0, 0, 0, 0.8);
 }
 
+.error__overlay,
+.success__overlay {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 100;
+  opacity: 0;
+}
+
 .error__inner,
 .success__inner {
   position: relative;
@@ -1284,6 +1295,7 @@ main {
 
   background-color: #3c3614;
   border-radius: 10px;
+  z-index: 101;
 }
 
 .success__inner {
