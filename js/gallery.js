@@ -1,4 +1,4 @@
-"use strict";
+'use strict';
 
 (function () {
   let templatePicture = document
@@ -25,13 +25,10 @@
     return photoElement;
   };
 
-  let succesHandler = function (sentPhotos) {
-
-    let fragment = document.createDocumentFragment();
-    for (let i = 0; i < sentPhotos.length; i++) {
-      fragment.appendChild(renderPhoto(sentPhotos[i]));
-    }
-    pictures.appendChild(fragment);
+  window.sentPhotos = [];
+  let succesHandler = function (data) {
+    window.sentPhotos = data;
+    window.galleryFilter.addingPhotos(window.sentPhotos);
   };
 
   let errorHandler = function (errorMessage) {
@@ -70,15 +67,17 @@
       };
       photos.push(photo);
     }
-
-    window.backend.getPictures(succesHandler, errorHandler);
   };
+
+  window.backend.getPictures(succesHandler, errorHandler);
 
   window.gallery = {
     comments,
     photos,
     pictures,
+    renderPhoto,
     addPhotos,
-    errorHandler
+    errorHandler,
+    getRandomFromArray
   };
 })();

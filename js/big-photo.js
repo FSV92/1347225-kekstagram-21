@@ -15,6 +15,7 @@
 
   window.gallery.addPhotos(25);
 
+
   let closeBigPhotoEsc = function (evt) {
     if (evt.key === `Escape`) {
       evt.preventDefault();

@@ -16,7 +16,6 @@
         onError(`Произошла ошибка получения: ` + xhr.status + ` ` + xhr.text);
       }
     });
-
     xhr.open(`GET`, URL_GET);
     xhr.send();
   };
@@ -39,6 +38,6 @@
 
   window.backend = {
     getPictures,
-    sendForm,
+    sendForm
   };
 })();
