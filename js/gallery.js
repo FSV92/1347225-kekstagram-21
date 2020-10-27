@@ -14,6 +14,8 @@
     return arr[Math.floor(Math.random() * arr.length)];
   };
 
+  let descriptions = [];
+  let comments = [];
   let renderPhoto = function (photo) {
     let photoElement = templatePicture.cloneNode(true);
 
@@ -21,6 +23,9 @@
     photoElement.querySelector(`.picture__likes`).textContent = photo.likes;
     photoElement.querySelector(`.picture__comments`).textContent =
       photo.comments.length;
+
+    descriptions.push(photo.description);
+    comments.push(photo.comments);
 
     return photoElement;
   };
@@ -44,40 +49,31 @@
     document.body.insertAdjacentElement(`afterbegin`, node);
   };
 
-  let comments = [];
-  let photos = [];
-  let addPhotos = function (quantity) {
-    let photo = {};
-    let comment = {};
+  // let comments = [];
+  // let addPhotos = function (quantity) {
+  //   // let photo = {};
+  //   let comment = {};
 
-    for (let i = 0; i < quantity; i++) {
-      comment = {
-        avatar: `img/avatar-${getRandomInRange(1, 6)}.svg`,
-        message: getRandomFromArray(window.data.MESSAGES),
-        name: getRandomFromArray(window.data.NAMES),
-      };
-      comments.push(comment);
-
-      photo = {
-        url: `photos/${i}.jpg`,
-        description: `Просто фото.`,
-        likes: getRandomInRange(15, 200),
-        numberComments: getRandomInRange(1, 50),
-        textComment: comments[i]
-      };
-      photos.push(photo);
-    }
-  };
+  //   for (let i = 0; i < quantity; i++) {
+  //     comment = {
+  //       avatar: `img/avatar-${getRandomInRange(1, 6)}.svg`,
+  //       message: getRandomFromArray(window.data.MESSAGES),
+  //       name: getRandomFromArray(window.data.NAMES),
+  //     };
+  //     // comments.push(comment);
+  //   }
+  // };
 
   window.backend.getPictures(succesHandler, errorHandler);
 
   window.gallery = {
-    comments,
-    photos,
+    // comments,
     pictures,
     renderPhoto,
-    addPhotos,
+    // addPhotos,
     errorHandler,
-    getRandomFromArray
+    getRandomFromArray,
+    descriptions,
+    comments
   };
 })();

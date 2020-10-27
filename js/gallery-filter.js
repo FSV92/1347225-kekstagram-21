@@ -91,6 +91,7 @@
   });
 
   window.galleryFilter = {
-    addingPhotos
+    addingPhotos,
+    numberInString
   };
 }());
