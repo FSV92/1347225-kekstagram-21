@@ -1,46 +1,52 @@
 'use strict';
 
-(function () {
-  let scaleSmaller = window.form.imgUploadOverlay.querySelector(`.scale__control--smaller`);
-  let scaleBigger = window.form.imgUploadOverlay.querySelector(`.scale__control--bigger `);
-  let scaleValue = window.form.imgUploadOverlay.querySelector(`.scale__control--value`);
-  let imgUploadPreview = window.form.imgUploadOverlay.querySelector(`.img-upload__preview`);
+let scaleSmaller = window.form.imgUploadOverlay.querySelector(`.scale__control--smaller`);
+let scaleBigger = window.form.imgUploadOverlay.querySelector(`.scale__control--bigger `);
+let scaleValue = window.form.imgUploadOverlay.querySelector(`.scale__control--value`);
+let imgUploadPreview = window.form.imgUploadOverlay.querySelector(`.img-upload__preview`);
 
-  let increase = function () {
-    if (scaleValue.value === `25%`) {
+let increaseScale = function () {
+  switch (scaleValue.value) {
+    case `25%`:
       imgUploadPreview.style = `transform: scale(0.5)`;
       scaleValue.value = `50%`;
-    } else if (scaleValue.value === `50%`) {
+      break;
+    case `50%`:
       imgUploadPreview.style = `transform: scale(0.75)`;
       scaleValue.value = `75%`;
-    } else {
+      break;
+    default:
       imgUploadPreview.style = `transform: scale(1)`;
       scaleValue.value = `100%`;
-    }
-  };
+      break;
+  }
+};
 
-  let decrease = function () {
-    if (scaleValue.value === `100%`) {
+let decreaseScale = function () {
+  switch (scaleValue.value) {
+    case `100%`:
       imgUploadPreview.style = `transform: scale(0.75)`;
       scaleValue.value = `75%`;
-    } else if (scaleValue.value === `75%`) {
+      break;
+    case `75%`:
       imgUploadPreview.style = `transform: scale(0.5)`;
       scaleValue.value = `50%`;
-    } else {
+      break;
+    default:
       imgUploadPreview.style = `transform: scale(0.25)`;
       scaleValue.value = `25%`;
-    }
-  };
+      break;
+  }
+};
 
-  scaleSmaller.addEventListener(`click`, function () {
-    decrease();
-  });
-  scaleBigger.addEventListener(`click`, function () {
-    increase();
-  });
+scaleSmaller.addEventListener(`click`, function () {
+  decreaseScale();
+});
+scaleBigger.addEventListener(`click`, function () {
+  increaseScale();
+});
 
-  window.scale = {
-    imgUploadPreview,
-    scaleValue
-  };
-}());
+window.scale = {
+  imgUploadPreview,
+  scaleValue
+};
