@@ -2,6 +2,7 @@
 
 const QUANTITY_PHOTOS = 10;
 const FIRST_TWO_ELEMENTS = 2;
+
 let imgFilters = document.querySelector(`.img-filters`);
 let imgFiltersForm = imgFilters.querySelector(`.img-filters__form`);
 let numberInString = /\d+/;
