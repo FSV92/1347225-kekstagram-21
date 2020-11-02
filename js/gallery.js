@@ -5,13 +5,14 @@ let templatePicture = document
   .content.querySelector(`.picture`);
 let pictures = document.querySelector(`.pictures`);
 
-let getRandomFromArray = function (arr) {
+function getRandomFromArray(arr) {
   return arr[Math.floor(Math.random() * arr.length)];
-};
+}
 
 let descriptions = [];
 let comments = [];
-let renderPhoto = function (photo) {
+
+function renderPhoto(photo) {
   let photoElement = templatePicture.cloneNode(true);
 
   photoElement.querySelector(`.picture__img`).src = photo.url;
@@ -23,15 +24,16 @@ let renderPhoto = function (photo) {
   comments.push(photo.comments);
 
   return photoElement;
-};
+}
 
 window.sentPhotos = [];
-let succesHandler = function (data) {
+
+function succesHandler(data) {
   window.sentPhotos = data;
   window.galleryFilter.addingPhotos(window.sentPhotos);
-};
+}
 
-let errorHandler = function (errorMessage) {
+function errorHandler(errorMessage) {
   let node = document.createElement(`div`);
   node.style = `z-index: 100; margin: 0 auto; text-align: center; background-color: red;`;
   node.style.position = `absolute`;
@@ -42,7 +44,7 @@ let errorHandler = function (errorMessage) {
 
   node.textContent = errorMessage;
   document.body.insertAdjacentElement(`afterbegin`, node);
-};
+}
 
 window.backend.getPictures(succesHandler, errorHandler);
 

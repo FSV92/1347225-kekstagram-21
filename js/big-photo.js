@@ -1,5 +1,7 @@
 'use strict';
 
+const MIN_DISPLAYED_COMMENTS = 5;
+
 let bigPicture = document.querySelector(`.big-picture`);
 let bigPictureImg = bigPicture
   .querySelector(`.big-picture__img`)
@@ -16,17 +18,18 @@ let lastNumberInString = (/\d+(?=\D*$)/);
 
 let targetIndex;
 let nextToLastShowedComment;
-let getStartComments = function (evt) {
+
+function getStartComments(evt) {
   nextToLastShowedComment = 5;
   socialCommentCount.firstChild.textContent = `${nextToLastShowedComment} из `;
   let startQuantity;
   targetIndex = evt.target.src.match(lastNumberInString) - 1;
-  if (window.gallery.comments[targetIndex].length < 5) {
+  if (window.gallery.comments[targetIndex].length < MIN_DISPLAYED_COMMENTS) {
     startQuantity = window.gallery.comments[targetIndex].length;
     socialCommentCount.firstChild.textContent = `${window.gallery.comments[targetIndex].length} из `;
     commentsLoader.classList.add(`hidden`);
   } else {
-    startQuantity = 5;
+    startQuantity = MIN_DISPLAYED_COMMENTS;
   }
 
   let fragment = document.createDocumentFragment();
@@ -40,12 +43,13 @@ let getStartComments = function (evt) {
     nextToLastShowedComment = i + 1;
   }
   socialComments.appendChild(fragment);
-};
+}
 
 let endShow;
-let loadComments = function () {
-  if (window.gallery.comments[targetIndex].length - nextToLastShowedComment > 5) {
-    endShow = nextToLastShowedComment + 5;
+
+function loadComments() {
+  if (window.gallery.comments[targetIndex].length - nextToLastShowedComment > MIN_DISPLAYED_COMMENTS) {
+    endShow = nextToLastShowedComment + MIN_DISPLAYED_COMMENTS;
   } else {
     endShow = window.gallery.comments[targetIndex].length;
     commentsLoader.classList.add(`hidden`);
@@ -63,16 +67,16 @@ let loadComments = function () {
 
   }
   socialComments.appendChild(fragment);
-};
+}
 
-let closeBigPhotoEsc = function (evt) {
+function closeBigPhotoEsc(evt) {
   if (evt.key === `Escape`) {
     evt.preventDefault();
     closeBigPhoto();
   }
-};
+}
 
-let openBigPhoto = function (evt) {
+function openBigPhoto(evt) {
   if (evt.target && evt.target.matches(`.picture__img`)) {
     bigPictureImg.src = evt.target.src;
     bigPicture.classList.remove(`hidden`);
@@ -86,15 +90,15 @@ let openBigPhoto = function (evt) {
     getStartComments(evt);
     commentsLoader.addEventListener(`click`, loadComments);
   }
-};
+}
 
-let closeBigPhoto = function () {
+function closeBigPhoto() {
   bigPicture.classList.add(`hidden`);
   document.removeEventListener(`keydown`, closeBigPhotoEsc);
   document.querySelector(`body`).classList.remove(`modal-open`);
   socialComments.innerHTML = ``;
   commentsLoader.removeEventListener(`click`, loadComments);
-};
+}
 
 window.gallery.pictures.addEventListener(`click`, function (evt) {
   openBigPhoto(evt);

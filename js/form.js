@@ -5,20 +5,20 @@ let imgUploadOverlay = document.querySelector(`.img-upload__overlay`);
 let uploadCancel = imgUploadOverlay.querySelector(`#upload-cancel`);
 let textDescription = imgUploadOverlay.querySelector(`.text__description`);
 
-let onEditorEscPress = function (evt) {
+function onEditorEscPress(evt) {
   if (evt.key === `Escape` && document.activeElement !== window.hashtags.textHashtags & document.activeElement !== textDescription) {
     evt.preventDefault();
     closeEditor();
   }
-};
+}
 
-let closeEditor = function () {
+function closeEditor() {
   imgUploadOverlay.classList.add(`hidden`);
   document.querySelector(`body`).classList.remove(`modal-open`);
   document.removeEventListener(`keydown`, onEditorEscPress);
-};
+}
 
-let openEditor = function () {
+function openEditor() {
   imgUploadOverlay.classList.remove(`hidden`);
   document.querySelector(`body`).classList.add(`modal-open`);
   uploadCancel.addEventListener(`click`, closeEditor);
@@ -26,7 +26,7 @@ let openEditor = function () {
   window.effects.applyEffect(`effects__preview--none`);
   window.scale.imgUploadPreview.removeAttribute(`style`);
   window.effects.effectLevel.style.display = `none`;
-};
+}
 
 let uploadForm = document.querySelector(`.img-upload__form`);
 let main = document.querySelector(`main`);
@@ -39,54 +39,54 @@ let templateError = document.querySelector(`#error`).content.querySelector(`.err
 let errorOverlay = templateError.querySelector(`.error__overlay`);
 let errorButton = templateError.querySelector(`.error__button`);
 
-let resetForm = function () {
+function resetForm() {
   window.effects.applyEffect(`effects__preview--none`);
   window.effects.effectLevel.style.display = `none`;
   window.hashtags.textHashtags.value = ``;
   textDescription.value = ``;
   imgUploadOverlay.classList.add(`hidden`);
-  window.scale.scaleValue.value = `100%`;
-};
+  window.scale.scaleValue.value = window.effects.MAX_VALUE_PERCENT + `%`;
+}
 
-let successHandler = function () {
+function successHandler() {
   resetForm();
   main.insertAdjacentElement(`afterbegin`, templateSuccess);
-};
+}
 
-let errorHandler = function () {
+function errorHandler() {
   resetForm();
   main.insertAdjacentElement(`afterbegin`, templateError);
-};
+}
 
-let cleanEvents = function () {
+function cleanEvents() {
   document.removeEventListener(`keydown`, onResultEscPress);
   successButton.removeEventListener(`click`, closeSuccess);
   successOverlay.removeEventListener(`click`, closeSuccess);
 
   errorButton.removeEventListener(`click`, closeError);
   errorOverlay.removeEventListener(`click`, closeError);
-};
+}
 
-let closeSuccess = function () {
+function closeSuccess() {
   templateSuccess.remove();
   cleanEvents();
-};
+}
 
-let closeError = function () {
+function closeError() {
   templateError.remove();
   cleanEvents();
-};
+}
 
-let onResultEscPress = function (evt) {
+function onResultEscPress(evt) {
   evt.preventDefault();
   if (evt.key === `Escape` && main.firstChild.className === `success`) {
     closeSuccess();
   } else {
     closeError();
   }
-};
+}
 
-let submitHandler = function (evt) {
+function submitHandler(evt) {
   evt.preventDefault();
 
   window.backend.sendForm(new FormData(uploadForm), successHandler, errorHandler);
@@ -98,7 +98,7 @@ let submitHandler = function (evt) {
   errorOverlay.addEventListener(`click`, closeError);
   document.removeEventListener(`keydown`, onEditorEscPress);
   uploadFile.value = ``;
-};
+}
 
 uploadForm.addEventListener(`submit`, submitHandler);
 uploadFile.addEventListener(`change`, openEditor);

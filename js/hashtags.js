@@ -1,11 +1,12 @@
 'use strict';
 
+const QUANTUTY_HASHTAGS = 5;
 let textHashtags = window.form.imgUploadOverlay.querySelector(`.text__hashtags`);
 let imgUploadSubmit = window.form.imgUploadOverlay.querySelector(`.img-upload__submit`);
 
-let re = /^#[a-zA-Z0-9]{1,19}$/;
+let re = /^(#[a-zA-Z0-9]{1,19}|$)$/;
 
-let getCheckHashtags = function () {
+function getCheckHashtags() {
   let hashtags = textHashtags.value.toLowerCase().split(` `);
 
   for (let i = 0; i < hashtags.length; i++) {
@@ -15,7 +16,7 @@ let getCheckHashtags = function () {
     if (hashtags[i].indexOf(`#`, 1) > -1) {
       textHashtags.setCustomValidity(`хэш-теги разделяются пробелами`);
     }
-    if (hashtags.length > 5) {
+    if (hashtags.length > QUANTUTY_HASHTAGS) {
       textHashtags.setCustomValidity(`нельзя указать больше 5 хэш-тегов`);
     }
     if (hashtags.indexOf(hashtags[i], i + 1) > -1) {
@@ -24,11 +25,11 @@ let getCheckHashtags = function () {
       );
     }
   }
-};
+}
 
-let clearMessage = function () {
+function clearMessage() {
   textHashtags.setCustomValidity(``);
-};
+}
 
 imgUploadSubmit.addEventListener(`click`, function () {
   getCheckHashtags();
