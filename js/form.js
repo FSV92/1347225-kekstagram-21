@@ -1,4 +1,5 @@
 'use strict';
+const DEFAULT_SCALE = `100%`;
 
 let uploadFile = document.querySelector(`#upload-file`);
 let imgUploadOverlay = document.querySelector(`.img-upload__overlay`);
@@ -26,6 +27,7 @@ function openEditor() {
   window.effects.applyEffect(`effects__preview--none`);
   window.scale.imgUploadPreview.removeAttribute(`style`);
   window.effects.effectLevel.style.display = `none`;
+  window.scale.scaleValue.value = DEFAULT_SCALE;
 }
 
 let uploadForm = document.querySelector(`.img-upload__form`);
@@ -45,7 +47,7 @@ function resetForm() {
   window.hashtags.textHashtags.value = ``;
   textDescription.value = ``;
   imgUploadOverlay.classList.add(`hidden`);
-  window.scale.scaleValue.value = window.effects.MAX_VALUE_PERCENT + `%`;
+  window.scale.scaleValue.value = DEFAULT_SCALE;
 }
 
 function successHandler() {

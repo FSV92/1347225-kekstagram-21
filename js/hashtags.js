@@ -7,7 +7,9 @@ let imgUploadSubmit = window.form.imgUploadOverlay.querySelector(`.img-upload__s
 let re = /^(#[a-zA-Z0-9]{1,19}|$)$/;
 
 function getCheckHashtags() {
-  let hashtags = textHashtags.value.toLowerCase().split(` `);
+  let hashtags = textHashtags.value.toLowerCase().split(` `).filter(function (tag) {
+    return tag;
+  });
 
   for (let i = 0; i < hashtags.length; i++) {
     if (!re.test(hashtags[i])) {

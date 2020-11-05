@@ -122,6 +122,7 @@ effectLevelPin.addEventListener(`mousedown`, function (evt) {
 });
 
 window.effects = {
+  MAX_VALUE,
   applyEffect,
   effectLevel,
   effectsPreview

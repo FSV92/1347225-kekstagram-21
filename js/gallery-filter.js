@@ -44,19 +44,22 @@ function getDefaultPhotos(photos) {
   replacingPhotos(photos);
 }
 
-function getRandomPhotos(photos) {
-  let randomPhotos = [];
-  let uniquePhotos = [];
-
-  for (let i = 0; i < photos.length; i++) {
-    randomPhotos[i] = window.gallery.getRandomFromArray(photos);
-    randomPhotos.push(randomPhotos[i]);
-  }
-  uniquePhotos = randomPhotos.filter(function (photo, index) {
-    return randomPhotos.indexOf(photo) === index;
-  });
-  addingLimitedPhotos(uniquePhotos);
+function getRandomNumber(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
 }
+
+function getRandomPhotos(photos) {
+  let randomNumber;
+  let getRandomElement;
+  for (let i = photos.length - 1; i > 0; i--) {
+    randomNumber = getRandomNumber(0, i);
+    getRandomElement = photos[randomNumber];
+    photos[randomNumber] = photos[i];
+    photos[i] = getRandomElement;
+  }
+  addingLimitedPhotos(photos);
+}
+
 
 function getDiscussedPhotos(photos) {
   photos.sort(function (prev, next) {
