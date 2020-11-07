@@ -1,9 +1,9 @@
 'use strict';
 
-let templatePicture = document
+const TEMPLATE_PICTURE = document
   .querySelector(`#picture`)
   .content.querySelector(`.picture`);
-let pictures = document.querySelector(`.pictures`);
+const PICTURES = document.querySelector(`.pictures`);
 
 function getRandomFromArray(arr) {
   return arr[Math.floor(Math.random() * arr.length)];
@@ -13,7 +13,7 @@ let descriptions = [];
 let comments = [];
 
 function renderPhoto(photo) {
-  let photoElement = templatePicture.cloneNode(true);
+  let photoElement = TEMPLATE_PICTURE.cloneNode(true);
 
   photoElement.querySelector(`.picture__img`).src = photo.url;
   photoElement.querySelector(`.picture__likes`).textContent = photo.likes;
@@ -49,7 +49,7 @@ function errorHandler(errorMessage) {
 window.backend.getPictures(succesHandler, errorHandler);
 
 window.gallery = {
-  pictures,
+  PICTURES,
   renderPhoto,
   errorHandler,
   getRandomFromArray,

@@ -8,11 +8,11 @@ function request(method, url, onSuccess, onError, data = null) {
   let xhr = new XMLHttpRequest();
   xhr.responseType = `json`;
 
-  xhr.addEventListener(`load`, function () {
+  xhr.addEventListener(`load`, () => {
     if (xhr.status === STATUS_OK) {
       onSuccess(xhr.response);
     } else {
-      onError(`Произошла ошибка получения: ` + xhr.status + ` ` + xhr.text);
+      onError(`Произошла ошибка получения: ${xhr.status} ${xhr.text}`);
     }
   });
   xhr.open(method, url);

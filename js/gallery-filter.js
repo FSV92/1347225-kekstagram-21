@@ -3,15 +3,15 @@
 const QUANTITY_PHOTOS = 10;
 const FIRST_TWO_ELEMENTS = 2;
 
-let imgFilters = document.querySelector(`.img-filters`);
-let imgFiltersForm = imgFilters.querySelector(`.img-filters__form`);
-let numberInString = /\d+/;
+const IMG_FILTERS = document.querySelector(`.img-filters`);
+const IMG_FILTERS_FORM = IMG_FILTERS.querySelector(`.img-filters__form`);
+const NUMBER_IN_STRING = /\d+/;
 
-imgFilters.classList.remove(`img-filters--inactive`);
+IMG_FILTERS.classList.remove(`img-filters--inactive`);
 
 function removePhoto() {
-  while (window.gallery.pictures.children.length > FIRST_TWO_ELEMENTS) {
-    window.gallery.pictures.removeChild(window.gallery.pictures.lastChild);
+  while (window.gallery.PICTURES.children.length > FIRST_TWO_ELEMENTS) {
+    window.gallery.PICTURES.removeChild(window.gallery.PICTURES.lastChild);
   }
 }
 
@@ -20,7 +20,7 @@ function addPhotos(photos, length) {
   for (let i = 0; i < length; i++) {
     fragment.appendChild(window.gallery.renderPhoto(photos[i]));
   }
-  window.gallery.pictures.appendChild(fragment);
+  window.gallery.PICTURES.appendChild(fragment);
 }
 
 function addingPhotos(photos) {
@@ -38,8 +38,8 @@ function addingLimitedPhotos(photos) {
 }
 
 function getDefaultPhotos(photos) {
-  photos.sort(function (prev, next) {
-    return prev.url.match(numberInString) - next.url.match(numberInString);
+  photos.sort((prev, next) => {
+    return prev.url.match(NUMBER_IN_STRING) - next.url.match(NUMBER_IN_STRING);
   });
   replacingPhotos(photos);
 }
@@ -62,13 +62,13 @@ function getRandomPhotos(photos) {
 
 
 function getDiscussedPhotos(photos) {
-  photos.sort(function (prev, next) {
+  photos.sort((prev, next) => {
     return next.comments.length - prev.comments.length;
   });
   replacingPhotos(photos);
 }
 
-imgFiltersForm.addEventListener(`click`, window.debounce(function (evt) {
+IMG_FILTERS_FORM.addEventListener(`click`, window.debounce((evt) => {
   switch (evt.target.id) {
     case `filter-random`:
       getRandomPhotos(window.sentPhotos);
@@ -82,27 +82,26 @@ imgFiltersForm.addEventListener(`click`, window.debounce(function (evt) {
   }
 }));
 
-imgFiltersForm.addEventListener(`click`, function (evt) {
+IMG_FILTERS_FORM.addEventListener(`click`, (evt) => {
   switch (evt.target.id) {
     case `filter-random`:
-      imgFiltersForm.querySelector(`#filter-default`).classList.remove(`img-filters__button--active`);
-      imgFiltersForm.querySelector(`#filter-discussed`).classList.remove(`img-filters__button--active`);
+      IMG_FILTERS_FORM.querySelector(`#filter-default`).classList.remove(`img-filters__button--active`);
+      IMG_FILTERS_FORM.querySelector(`#filter-discussed`).classList.remove(`img-filters__button--active`);
       evt.target.classList.add(`img-filters__button--active`);
       break;
     case `filter-discussed`:
-      imgFiltersForm.querySelector(`#filter-default`).classList.remove(`img-filters__button--active`);
-      imgFiltersForm.querySelector(`#filter-random`).classList.remove(`img-filters__button--active`);
+      IMG_FILTERS_FORM.querySelector(`#filter-default`).classList.remove(`img-filters__button--active`);
+      IMG_FILTERS_FORM.querySelector(`#filter-random`).classList.remove(`img-filters__button--active`);
       evt.target.classList.add(`img-filters__button--active`);
       break;
     default:
-      imgFiltersForm.querySelector(`#filter-random`).classList.remove(`img-filters__button--active`);
-      imgFiltersForm.querySelector(`#filter-discussed`).classList.remove(`img-filters__button--active`);
+      IMG_FILTERS_FORM.querySelector(`#filter-random`).classList.remove(`img-filters__button--active`);
+      IMG_FILTERS_FORM.querySelector(`#filter-discussed`).classList.remove(`img-filters__button--active`);
       evt.target.classList.add(`img-filters__button--active`);
       break;
   }
 });
 
 window.galleryFilter = {
-  addingPhotos,
-  numberInString
+  addingPhotos
 };

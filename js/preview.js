@@ -2,10 +2,10 @@
 
 const FILE_TYPES = [`gif`, `jpg`, `jpeg`, `png`];
 
-let preview = window.scale.imgUploadPreview.querySelector(`img`);
+const PREVIEW = window.scale.IMG_UPLOAD_PREVIEW.querySelector(`img`);
 
-window.form.uploadFile.addEventListener(`change`, function () {
-  let file = window.form.uploadFile.files[0];
+window.form.UPLOAD_FILE.addEventListener(`change`, () => {
+  let file = window.form.UPLOAD_FILE.files[0];
   let fileName = file.name.toLowerCase();
 
   let matches = FILE_TYPES.some(function (it) {
@@ -15,11 +15,11 @@ window.form.uploadFile.addEventListener(`change`, function () {
   if (matches) {
     let reader = new FileReader();
 
-    reader.addEventListener(`load`, function () {
-      preview.src = reader.result;
-      for (let i = 0; i < window.effects.effectsPreview.length; i++) {
-        window.effects.effectsPreview[i].style.backgroundImage = `url("${reader.result}")`;
-      }
+    reader.addEventListener(`load`, () => {
+      PREVIEW.src = reader.result;
+      window.effects.EFFECTS_PREVIEWS.forEach((preview) => {
+        preview.style.backgroundImage = `url("${reader.result}")`;
+      });
     });
 
     reader.readAsDataURL(file);

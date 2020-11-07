@@ -1,46 +1,46 @@
 'use strict';
 
 const QUANTUTY_HASHTAGS = 5;
-let textHashtags = window.form.imgUploadOverlay.querySelector(`.text__hashtags`);
-let imgUploadSubmit = window.form.imgUploadOverlay.querySelector(`.img-upload__submit`);
+const TEXT_HASHTAGS = window.form.IMG_UPLOAD_OVERLAY.querySelector(`.text__hashtags`);
+const IMG_UPLOAD_SUBMIT = window.form.IMG_UPLOAD_OVERLAY.querySelector(`.img-upload__submit`);
 
-let re = /^(#[a-zA-Z0-9]{1,19}|$)$/;
+const RE = /^(#[a-zA-Zа-яА-Я0-9]{1,19}|$)$/;
 
 function getCheckHashtags() {
-  let hashtags = textHashtags.value.toLowerCase().split(` `).filter(function (tag) {
+  let hashtags = TEXT_HASHTAGS.value.toLowerCase().split(` `).filter(function (tag) {
     return tag;
   });
 
-  for (let i = 0; i < hashtags.length; i++) {
-    if (!re.test(hashtags[i])) {
-      textHashtags.setCustomValidity(`некорректный хэш-тэг`);
+  hashtags.forEach((tag, i) => {
+    if (!RE.test(tag)) {
+      TEXT_HASHTAGS.setCustomValidity(`некорректный хэш-тэг`);
     }
-    if (hashtags[i].indexOf(`#`, 1) > -1) {
-      textHashtags.setCustomValidity(`хэш-теги разделяются пробелами`);
+    if (tag.indexOf(`#`, 1) > -1) {
+      TEXT_HASHTAGS.setCustomValidity(`хэш-теги разделяются пробелами`);
     }
     if (hashtags.length > QUANTUTY_HASHTAGS) {
-      textHashtags.setCustomValidity(`нельзя указать больше 5 хэш-тегов`);
+      TEXT_HASHTAGS.setCustomValidity(`нельзя указать больше 5 хэш-тегов`);
     }
-    if (hashtags.indexOf(hashtags[i], i + 1) > -1) {
-      textHashtags.setCustomValidity(
+    if (hashtags.indexOf(tag, i + 1) > -1) {
+      TEXT_HASHTAGS.setCustomValidity(
           `один и тот же хэш-тег не может быть использован дважды`
       );
     }
-  }
+  });
 }
 
 function clearMessage() {
-  textHashtags.setCustomValidity(``);
+  TEXT_HASHTAGS.setCustomValidity(``);
 }
 
-imgUploadSubmit.addEventListener(`click`, function () {
+IMG_UPLOAD_SUBMIT.addEventListener(`click`, () => {
   getCheckHashtags();
 });
 
-textHashtags.addEventListener(`input`, function () {
+TEXT_HASHTAGS.addEventListener(`input`, () => {
   clearMessage();
 });
 
 window.hashtags = {
-  textHashtags
+  TEXT_HASHTAGS
 };

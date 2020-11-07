@@ -6,81 +6,80 @@ const ONE_THIRD = 33.3;
 const HALF = 50;
 const NEXT_VALUE = 1;
 
-let effectsList = window.form.imgUploadOverlay.querySelector(`.effects__list`);
-let effectLevel = window.form.imgUploadOverlay.querySelector(`.effect-level`);
-let effectLevelValue = effectLevel.querySelector(`.effect-level__value`);
-let effectsPreview = effectsList.querySelectorAll(`.effects__preview`);
+const EFFECTS_LIST = window.form.IMG_UPLOAD_OVERLAY.querySelector(`.effects__list`);
+const EFFECT_LEVEL = window.form.IMG_UPLOAD_OVERLAY.querySelector(`.effect-level`);
+const EFFECT_LEVEL_VALUE = EFFECT_LEVEL.querySelector(`.effect-level__value`);
+const EFFECTS_PREVIEWS = EFFECTS_LIST.querySelectorAll(`.effects__preview`);
+const EFFECT_LEVEL_PIN = EFFECT_LEVEL.querySelector(`.effect-level__pin`);
+const EFFECT_LEVEL_DEPTH = EFFECT_LEVEL.querySelector(`.effect-level__depth`);
 
 function applyEffect(effect) {
-  window.scale.imgUploadPreview.className = `img-upload__preview ${effect}`;
+  window.scale.IMG_UPLOAD_PREVIEW.className = `img-upload__preview ${effect}`;
 }
 
 function selectEffect(evt) {
   switch (evt.target.value) {
     case `chrome`:
       applyEffect(`effects__preview--chrome`);
-      effectLevel.style.display = `block`;
+      EFFECT_LEVEL.style.display = `block`;
       break;
     case `sepia`:
       applyEffect(`effects__preview--sepia`);
-      effectLevel.style.display = `block`;
+      EFFECT_LEVEL.style.display = `block`;
       break;
     case `marvin`:
       applyEffect(`effects__preview--marvin`);
-      effectLevel.style.display = `block`;
+      EFFECT_LEVEL.style.display = `block`;
       break;
     case `phobos`:
       applyEffect(`effects__preview--phobos`);
-      effectLevel.style.display = `block`;
+      EFFECT_LEVEL.style.display = `block`;
       break;
     case `heat`:
       applyEffect(`effects__preview--heat`);
-      effectLevel.style.display = `block`;
+      EFFECT_LEVEL.style.display = `block`;
       break;
     default:
       applyEffect(`effects__preview--none`);
-      effectLevel.style.display = `none`;
+      EFFECT_LEVEL.style.display = `none`;
       break;
   }
 }
 
 function setDefaultValue() {
-  effectLevelDepth.style.width = MAX_VALUE + `%`;
-  effectLevelPin.style.left = MAX_VALUE + `%`;
-  effectLevelValue.setAttribute(`value`, MAX_VALUE);
+  EFFECT_LEVEL_DEPTH.style.width = `${MAX_VALUE}%`;
+  EFFECT_LEVEL_PIN.style.left = `${MAX_VALUE}%`;
+  EFFECT_LEVEL_VALUE.setAttribute(`value`, MAX_VALUE);
 }
 
-effectsList.addEventListener(`change`, function (evt) {
+EFFECTS_LIST.addEventListener(`change`, (evt) => {
   selectEffect(evt);
-  window.scale.imgUploadPreview.removeAttribute(`style`);
-  window.scale.scaleValue.value = MAX_VALUE + `%`;
+  window.scale.IMG_UPLOAD_PREVIEW.removeAttribute(`style`);
+  window.scale.SCALE_VALUE.value = `${MAX_VALUE}%`;
   setDefaultValue();
 });
 
 function setIntensityEffect(value) {
-  switch (window.scale.imgUploadPreview.className) {
+  switch (window.scale.IMG_UPLOAD_PREVIEW.className) {
     case `img-upload__preview effects__preview--chrome`:
-      window.scale.imgUploadPreview.style = `filter: grayscale(${value / MAX_VALUE})`;
+      window.scale.IMG_UPLOAD_PREVIEW.style = `filter: grayscale(${value / MAX_VALUE})`;
       break;
     case `img-upload__preview effects__preview--sepia`:
-      window.scale.imgUploadPreview.style = `filter: sepia(${value / MAX_VALUE})`;
+      window.scale.IMG_UPLOAD_PREVIEW.style = `filter: sepia(${value / MAX_VALUE})`;
       break;
     case `img-upload__preview effects__preview--marvin`:
-      window.scale.imgUploadPreview.style = `filter: invert(${value}%)`;
+      window.scale.IMG_UPLOAD_PREVIEW.style = `filter: invert(${value}%)`;
       break;
     case `img-upload__preview effects__preview--phobos`:
-      window.scale.imgUploadPreview.style = `filter: blur(${value / ONE_THIRD}px)`;
+      window.scale.IMG_UPLOAD_PREVIEW.style = `filter: blur(${value / ONE_THIRD}px)`;
       break;
     case `img-upload__preview effects__preview--heat`:
-      window.scale.imgUploadPreview.style = `filter: brightness(${value / HALF + NEXT_VALUE})`;
+      window.scale.IMG_UPLOAD_PREVIEW.style = `filter: brightness(${value / HALF + NEXT_VALUE})`;
       break;
   }
 }
 
-let effectLevelPin = effectLevel.querySelector(`.effect-level__pin`);
-let effectLevelDepth = effectLevel.querySelector(`.effect-level__depth`);
-
-effectLevelPin.addEventListener(`mousedown`, function (evt) {
+EFFECT_LEVEL_PIN.addEventListener(`mousedown`, (evt) => {
   evt.preventDefault();
   let startX = evt.clientX;
 
@@ -91,39 +90,39 @@ effectLevelPin.addEventListener(`mousedown`, function (evt) {
 
     startX = moveEvt.clientX;
 
-    let positionPin = effectLevelPin.offsetLeft - shift;
+    let positionPin = EFFECT_LEVEL_PIN.offsetLeft - shift;
 
-    effectLevelPin.style.left = positionPin + `px`;
-    effectLevelDepth.style.width = (positionPin * MAX_VALUE / MAX_WIDTH) + `%`;
+    EFFECT_LEVEL_PIN.style.left = `${positionPin}px`;
+    EFFECT_LEVEL_DEPTH.style.width = `${(positionPin * MAX_VALUE / MAX_WIDTH)}%`;
 
     if (positionPin >= MAX_WIDTH) {
-      effectLevelPin.style.left = MAX_WIDTH + `px`;
-      effectLevelDepth.style.width = MAX_VALUE + `%`;
+      EFFECT_LEVEL_PIN.style.left = `${MAX_WIDTH}px`;
+      EFFECT_LEVEL_DEPTH.style.width = `${MAX_VALUE}%`;
     }
     if (positionPin <= `0`) {
-      effectLevelPin.style.left = `0px`;
-      effectLevelDepth.style.width = `0%`;
+      EFFECT_LEVEL_PIN.style.left = `0px`;
+      EFFECT_LEVEL_DEPTH.style.width = `0%`;
     }
   }
 
   function onMouseUp(upEvt) {
     upEvt.preventDefault();
-    let valueDepth = parseFloat(effectLevelDepth.style.width);
+    let valueDepth = parseFloat(EFFECT_LEVEL_DEPTH.style.width);
 
-    effectLevelValue.setAttribute(`value`, valueDepth);
+    EFFECT_LEVEL_VALUE.setAttribute(`value`, valueDepth);
     setIntensityEffect(valueDepth);
 
-    window.form.imgUploadOverlay.removeEventListener(`mousemove`, onMouseMove);
-    window.form.imgUploadOverlay.removeEventListener(`mouseup`, onMouseUp);
+    window.form.IMG_UPLOAD_OVERLAY.removeEventListener(`mousemove`, onMouseMove);
+    window.form.IMG_UPLOAD_OVERLAY.removeEventListener(`mouseup`, onMouseUp);
   }
 
-  window.form.imgUploadOverlay.addEventListener(`mousemove`, onMouseMove);
-  window.form.imgUploadOverlay.addEventListener(`mouseup`, onMouseUp);
+  window.form.IMG_UPLOAD_OVERLAY.addEventListener(`mousemove`, onMouseMove);
+  window.form.IMG_UPLOAD_OVERLAY.addEventListener(`mouseup`, onMouseUp);
 });
 
 window.effects = {
   MAX_VALUE,
   applyEffect,
-  effectLevel,
-  effectsPreview
+  EFFECT_LEVEL,
+  EFFECTS_PREVIEWS
 };
